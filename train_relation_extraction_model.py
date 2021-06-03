@@ -128,16 +128,16 @@ def main(**kwargs):
             best_T1 = bestT1
             best_T2 = bestT2
             if kwargs["output_dir"]:
-                output_dir = os.path.join(kwargs["output_dir"], f"F1-{best_f1:0.4f}_T1-{best_T1}_T2-{best_T2}")
+                output_dir = os.path.join(kwargs["output_dir"], f"F1-{best_f1:0.3f}_T1-{best_T1:0.2f}_T2-{best_T2:0.2f}")
                 model.save_pretrained(output_dir)
 
-        logger.info(f"PR: {precision:0.4f}, RE: {recall:0.4f}")
-        logger.info(f"F1: {f1:0.4f}, BEST T1: {bestT1}, BEST T2: {bestT2}")
+        logger.info(f"PR: {precision:0.3f}, RE: {recall:0.3f}")
+        logger.info(f"F1: {f1:0.3f}, BEST T1: {bestT1}, BEST T2: {bestT2}")
         logger.info(f"Hits @ {topk}: {hits_at_k}")
-        logger.info(f"MRR: {MRR:0.4f}")
+        logger.info(f"MRR: {MRR:0.3f}")
 
     if kwargs["output_dir"]:
-        output_dir = os.path.join(kwargs["output_dir"], f"final.F1-{f1:0.4f}_T1-{bestT1}_T2-{bestT2}")
+        output_dir = os.path.join(kwargs["output_dir"], f"final.F1-{f1:0.3f}_T1-{bestT1:0.2f}_T2-{bestT2:0.2f}")
         model.save_pretrained(output_dir)
 
 

@@ -47,8 +47,8 @@ def get_f1_from_logits(logits, labels, threshold1=None, threshold2=None):
         return precision, recall, f1
 
     best_f1, best_pr, best_re, best_T1, best_T2 = 0, 0, 0, 0, 0
-    for thresh1 in range(0, 100, 5):
-        for thresh2 in range(0, thresh1, 2):
+    for thresh1 in range(0, 100, 10):
+        for thresh2 in range(0, thresh1, 5):
             preds = get_predictions(logits, threshold1=thresh1 / 100, threshold2=thresh2 / 100)
             precision, recall, f1 = calculate_f1(preds, labels)
             if f1 > best_f1:

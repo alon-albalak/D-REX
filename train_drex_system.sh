@@ -2,7 +2,6 @@
 # get best dev f1: VARNAME=$(ls model_path/F1* -d | sort -r | head -n 1)
 
 GPU=$1
-SEED=$2
 
 # pre-train initial relation extraction model
 MODEL_PATH=initial_ranking_model
@@ -16,7 +15,6 @@ CUDA_VISIBLE_DEVICES=$GPU python3 train_relation_extraction_model.py \
     --fp16 \
     --output_dir=$MODEL_PATH \
     --relation_extraction_pretraining \
-    --seed=$SEED \
     > $MODEL_PATH/train_outputs.log
 
 BEST_INITIAL_RANKER=$(ls $MODEL_PATH/F1* -d | sort -r | head -n 1)
@@ -34,7 +32,6 @@ CUDA_VISIBLE_DEVICES=$GPU python3 train_explanation_policy.py \
     --fp16 \
     --output_dir=$MODEL_PATH \
     --explanation_policy_pretraining \
-    --seed=$SEED \
     > $MODEL_PATH/train_outputs.log
 
 BEST_EXPL_POLICY=$(find $MODEL_PATH -name final*)
@@ -90,7 +87,6 @@ CUDA_VISIBLE_DEVICES=$GPU python3 train_relation_extraction_model.py \
     --relation_extraction_conditioned_on_explanations \
     --use_predicted_explanations \
     --predicted_explanation_path=$BEST_EXPL_POLICY \
-    --seed=$SEED \
     > $MODEL_PATH/train_outputs.log
 
 BEST_RERANKER=$(ls $MODEL_PATH/F1* -d | sort -r | head -n 1)
@@ -109,5 +105,4 @@ CUDA_VISIBLE_DEVICES=$GPU python3 train_drex.py \
     --reranking_reward \
     --supervised_expl_loss \
     --leave_one_out_loss_reranker \
-    --seed=$SEED \
     > $MODEL_PATH/train_outputs.log

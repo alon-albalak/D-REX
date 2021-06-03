@@ -687,20 +687,20 @@ def main(**kwargs):
             best_T1 = bestT1
             best_T2 = bestT2
             if kwargs["output_dir"]:
-                output_dir = os.path.join(kwargs["output_dir"], f"F1-{best_f1:0.4f}_T1-{best_T1:0.4f}_T2-{best_T2:0.4f}")
+                output_dir = os.path.join(kwargs["output_dir"], f"F1-{best_f1:0.3f}_T1-{best_T1:0.2f}_T2-{best_T2:0.2f}")
                 expl_model.save_pretrained(output_dir + "expl_model")
                 reranker_model.save_pretrained(output_dir + "reranker_model")
         if os.path.isdir(kwargs["output_dir"]):
-            with open(os.path.join(kwargs["output_dir"], f"F1-{f1:0.4f}.dev_outputs.txt"), "w") as f:
+            with open(os.path.join(kwargs["output_dir"], f"F1-{f1:0.3f}.dev_outputs.txt"), "w") as f:
                 for output in outputs:
                     f.write("\t".join([str(o) for o in output]) + "\n")
-            pred_rel_count, _ = analysis_utils.get_explanations_per_relation(os.path.join(kwargs["output_dir"], f"F1-{f1:0.4f}.dev_outputs.txt"))
+            pred_rel_count, _ = analysis_utils.get_explanations_per_relation(os.path.join(kwargs["output_dir"], f"F1-{f1:0.3f}.dev_outputs.txt"))
             logger.info(f"Predicted explanations: {sum(pred_rel_count.values())}")
 
         softmax_temp = max(softmax_temp / kwargs["softmax_decay_ratio"], 0.1)
 
     if kwargs["output_dir"]:
-        output_dir = os.path.join(kwargs["output_dir"], f"final.F1-{f1:0.4f}_T1-{bestT1:0.2f}_T2-{bestT2:0.2f}")
+        output_dir = os.path.join(kwargs["output_dir"], f"final.F1-{f1:0.3f}_T1-{bestT1:0.2f}_T2-{bestT2:0.2f}")
         expl_model.save_pretrained(output_dir + "_expl_model")
         reranker_model.save_pretrained(output_dir + "_reranker_model")
 

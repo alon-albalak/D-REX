@@ -21,7 +21,7 @@ def convert_to_unicode(text):
 
 
 def decode_normalize_tokens(input_ids, start_idx, end_idx, tokenizer):
-    pred_value = tokenizer.decode(input_ids[start_idx : end_idx + 1], clean_up_tokenization_spaces=True).lstrip()
+    pred_value = tokenizer.decode(input_ids[start_idx : end_idx + 1]).lstrip()
     return pred_value
 
 
@@ -31,7 +31,6 @@ def tokenize(text, tokenizer):
     elif "bert" in tokenizer.name_or_path:
         unused_tokens = ["[unused1]", "[unused2]"]
     text_tokens = []
-    textraw = [text]
     textraw = [text.replace(":", "")]
     for delimiter in unused_tokens:
         ntextraw = []
@@ -79,7 +78,6 @@ def rename(d, x, y, tokenizer_name_or_path):
         unused_tokens = ["madeupword0001", "madeupword0002"]
     elif "bert" in tokenizer_name_or_path:
         unused_tokens = ["[unused1]", "[unused2]"]
-    # unused = ["[unused1]", "[unused2]"]
     a = []
     if is_speaker(x):
         a += [x]
@@ -269,7 +267,6 @@ def load_dialogRE_explanation_policy_pretraining(
 
                 trigger = convert_to_unicode(trigger)
 
-                # relation_id-1 because relations go from 1 to 37
                 sample = Sample(guid, dialogue, head, tail, relation_id - 1, trigger)
                 if predict_trigger_for_unlabelled or trigger:
                     samples.append(sample)

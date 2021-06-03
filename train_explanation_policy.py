@@ -144,18 +144,18 @@ def main(**kwargs):
         if f1 > best_f1:
             best_f1 = f1
             if kwargs["output_dir"]:
-                output_dir = os.path.join(kwargs["output_dir"], f"F1-{best_f1:0.4f}")
+                output_dir = os.path.join(kwargs["output_dir"], f"F1-{best_f1:0.3f}")
                 model.save_pretrained(output_dir)
 
         exact_match = total_samples_correct / total_samples
         if exact_match > best_exact_match:
             best_exact_match = exact_match
-        logger.info(f"EM: {exact_match:0.4f}, BEST EM: {best_exact_match:0.4f}")
-        logger.info(f"PR: {precision:0.4f}, RE: {recall:0.4f}")
-        logger.info(f"f1: {f1:0.4f}, BEST f1: {best_f1:0.4f}")
+        logger.info(f"EM: {exact_match:0.3f}, BEST EM: {best_exact_match:0.3f}")
+        logger.info(f"PR: {precision:0.3f}, RE: {recall:0.3f}")
+        logger.info(f"f1: {f1:0.3f}, BEST f1: {best_f1:0.3f}")
 
     if kwargs["output_dir"]:
-        output_dir = os.path.join(kwargs["output_dir"], f"final.F1-{f1:0.4f}")
+        output_dir = os.path.join(kwargs["output_dir"], f"final.F1-{f1:0.3f}")
         model.save_pretrained(output_dir)
 
 
