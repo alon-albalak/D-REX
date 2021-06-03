@@ -43,7 +43,7 @@ def main(**kwargs):
 
     max_pred_trigger_dist = kwargs["max_pred_trigger_dist"]
     tokens_GT, tokens_correct, tokens_pred = 0, 0, 0
-    total_samples, total_samples_correct = 0, 0
+    total_GT_samples, total_GT_samples_correct = 0, 0
     num_preds, num_overlapping = 0, 0
     outputs = []
     for batch in test_dataloader:
@@ -62,17 +62,20 @@ def main(**kwargs):
         for start_pred, end_pred, start_trigger_id, end_trigger_id, token_ids, sample, guid, relation_id, rel_ent_mask in zip(
             start_preds, end_preds, start_trigger_ids, end_trigger_ids, input_ids, samples, guids, relation_ids, relation_entities_mask
         ):
-            total_samples += 1
-            if start_pred == start_trigger_id and end_pred == end_trigger_id:
-                total_samples_correct += 1
 
-            for i in range(max(end_pred, end_trigger_id) + 1):
-                if start_trigger_id <= i <= end_trigger_id:
-                    tokens_GT += 1
+            # only calculate EM, F1 on samples with labeled trigger
+            if end_trigger_id > 0:
+                total_GT_samples += 1
+                if start_pred == start_trigger_id and end_pred == end_trigger_id:
+                    total_GT_samples_correct += 1
+
+                for i in range(max(end_pred, end_trigger_id) + 1):
+                    if start_trigger_id <= i <= end_trigger_id:
+                        tokens_GT += 1
+                        if start_pred <= i <= end_pred and end_pred - start_pred < max_pred_trigger_dist:
+                            tokens_correct += 1
                     if start_pred <= i <= end_pred and end_pred - start_pred < max_pred_trigger_dist:
-                        tokens_correct += 1
-                if start_pred <= i <= end_pred and end_pred - start_pred < max_pred_trigger_dist:
-                    tokens_pred += 1
+                        tokens_pred += 1
 
             GT_expl = data_utils.decode_normalize_tokens(token_ids.squeeze(), start_trigger_id, end_trigger_id, tokenizer)
 
@@ -104,12 +107,12 @@ def main(**kwargs):
     recall = 0 if tokens_GT == 0 else tokens_correct / tokens_GT
     f1 = 2 * precision * recall / (precision + recall) if (precision + recall) != 0 else 0
 
-    logger.info(f"TEST EM: {total_samples_correct/total_samples:0.4f}")
+    logger.info(f"TEST EM: {total_GT_samples_correct/total_GT_samples:0.4f}")
     logger.info(f"TEST PR: {precision:0.4f}, TEST RE: {recall:0.4f}")
     logger.info(f"TEST f1: {f1:0.4f}")
 
-    logger.info(f"Total GT triggers: {total_samples}")
-    logger.info(f"Total correct triggers: {total_samples_correct}")
+    logger.info(f"Total GT triggers: {total_GT_samples}")
+    logger.info(f"Total correct triggers: {total_GT_samples_correct}")
     logger.info(f"Number predictions overlapping w/ GT: {num_overlapping}")
     logger.info(f"Number samples w/ prediction: {num_preds}")
 
