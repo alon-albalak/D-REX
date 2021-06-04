@@ -688,8 +688,8 @@ def main(**kwargs):
             best_T2 = bestT2
             if kwargs["output_dir"]:
                 output_dir = os.path.join(kwargs["output_dir"], f"F1-{best_f1:0.3f}_T1-{best_T1:0.2f}_T2-{best_T2:0.2f}")
-                expl_model.save_pretrained(output_dir + "expl_model")
-                reranker_model.save_pretrained(output_dir + "reranker_model")
+                expl_model.save_pretrained(output_dir + "_expl_model")
+                reranker_model.save_pretrained(output_dir + "_reranker_model")
         if os.path.isdir(kwargs["output_dir"]):
             with open(os.path.join(kwargs["output_dir"], f"F1-{f1:0.3f}.dev_outputs.txt"), "w") as f:
                 for output in outputs:

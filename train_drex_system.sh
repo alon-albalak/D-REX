@@ -1,5 +1,8 @@
-#find final file: VARNAME=$(find model_path -name final*)
-# get best dev f1: VARNAME=$(ls model_path/F1* -d | sort -r | head -n 1)
+# Train the D-REX system from scratch, includes:
+#   pre-training initial ranking model
+#   pre-training explanation policy
+#   pre-training re-ranking model
+#   training explanation policy and re-ranking model under D-REX training algorithm
 
 GPU=$1
 
@@ -92,6 +95,7 @@ CUDA_VISIBLE_DEVICES=$GPU python3 train_relation_extraction_model.py \
 RERANKER=$(find $MODEL_PATH -name final*)
 echo "Found final reranker ${RERANKER}"
 
+# train full D-REX system
 MODEL_PATH=D_REX_system
 mkdir $MODEL_PATH
 CUDA_VISIBLE_DEVICES=$GPU python3 train_drex.py \
