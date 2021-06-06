@@ -186,7 +186,7 @@ def main(**kwargs):
             )
 
     topk = [1, 3, 5]
-    f1, precision, recall, _, _ = analysis_utils.get_f1_from_logits(logits, labels, kwargs["threshold1"], kwargs["threshold2"])
+    f1, precision, recall = analysis_utils.get_f1_from_logits(logits, labels, kwargs["threshold1"], kwargs["threshold2"])
     hits_at_k = analysis_utils.get_hits_at_k(topk, logits, labels)
     MRR = analysis_utils.get_MRR(logits, labels)
 

@@ -44,7 +44,7 @@ def get_f1_from_logits(logits, labels, threshold1=None, threshold2=None):
     if threshold1 and threshold2:
         preds = get_predictions(logits, threshold1=threshold1 / 100, threshold2=threshold2 / 100)
         precision, recall, f1 = calculate_f1(preds, labels)
-        return precision, recall, f1
+        return f1, precision, recall
 
     best_f1, best_pr, best_re, best_T1, best_T2 = 0, 0, 0, 0, 0
     for thresh1 in range(0, 100, 10):
