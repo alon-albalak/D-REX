@@ -57,7 +57,7 @@ def get_f1_from_logits(logits, labels, threshold1=None, threshold2=None):
                 best_re = recall
                 best_T1 = thresh1 / 100
                 best_T2 = thresh2 / 100
-    return best_f1, best_pr, best_re, best_T1, best_T2
+    return best_f1, best_pr, best_re, best_T1, max(best_T2, 0.01)
 
 
 def get_hits_at_k(k_list, logits, labels):
