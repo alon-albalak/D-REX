@@ -17,7 +17,7 @@ logger.addHandler(handler)
 
 def main(**kwargs):
     assert kwargs["data_split"]
-    assert kwargs["threshold1"] and kwargs["threshold2"]
+    assert (kwargs["threshold1"] is not None) and (kwargs["threshold2"] is not None)
 
     if kwargs["seed"] != -1:
         utils.set_seed(kwargs["seed"])
@@ -61,7 +61,7 @@ def main(**kwargs):
             labels.append(label.cpu().numpy())
         all_guids.extend(guids)
 
-    precision, recall, f1 = analysis_utils.get_f1_from_logits(logits, labels, kwargs["threshold1"], kwargs["threshold2"])
+    f1, precision, recall, _, _ = analysis_utils.get_f1_from_logits(logits, labels, kwargs["threshold1"], kwargs["threshold2"])
     hits_at_k = analysis_utils.get_hits_at_k(topk, logits, labels)
     MRR = analysis_utils.get_MRR(logits, labels)
 
