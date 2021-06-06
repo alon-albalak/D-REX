@@ -5,6 +5,8 @@
 #   training explanation policy and re-ranking model under D-REX training algorithm
 
 GPU=$1
+GPU_BATCH_SIZE=30
+EFFECTIVE_BATCH_SIZE=30
 
 # pre-train initial relation extraction model
 MODEL_PATH=initial_ranking_model
@@ -13,8 +15,8 @@ CUDA_VISIBLE_DEVICES=$GPU python3 train_relation_extraction_model.py \
     --model_class=relation_extraction_roberta \
     --model_name_or_path=roberta-base \
     --base_model=roberta-base \
-    --effective_batch_size=30 \
-    --gpu_batch_size=30 \
+    --effective_batch_size=$EFFECTIVE_BATCH_SIZE \
+    --gpu_batch_size=$GPU_BATCH_SIZE \
     --fp16 \
     --output_dir=$MODEL_PATH \
     --relation_extraction_pretraining \
@@ -30,8 +32,8 @@ CUDA_VISIBLE_DEVICES=$GPU python3 train_explanation_policy.py \
     --model_class=explanation_policy_roberta \
     --model_name_or_path=roberta-base \
     --base_model=roberta-base \
-    --effective_batch_size=30 \
-    --gpu_batch_size=30 \
+    --effective_batch_size=$EFFECTIVE_BATCH_SIZE \
+    --gpu_batch_size=$GPU_BATCH_SIZE \
     --fp16 \
     --output_dir=$MODEL_PATH \
     --explanation_policy_pretraining \
@@ -51,7 +53,7 @@ CUDA_VISIBLE_DEVICES=$GPU python3 test_explanation_policy.py \
     --output_dir=$EXPL_POLICY \
     --explanation_policy_pretraining \
     --predict_trigger_for_unlabelled \
-    --gpu_batch_size=30
+    --gpu_batch_size=$GPU_BATCH_SIZE
 
 CUDA_VISIBLE_DEVICES=$GPU python3 test_explanation_policy.py \
     --data_split=dev \
@@ -63,7 +65,7 @@ CUDA_VISIBLE_DEVICES=$GPU python3 test_explanation_policy.py \
     --output_dir=$EXPL_POLICY \
     --explanation_policy_pretraining \
     --predict_trigger_for_unlabelled \
-    --gpu_batch_size=30
+    --gpu_batch_size=$GPU_BATCH_SIZE
 
 CUDA_VISIBLE_DEVICES=$GPU python3 test_explanation_policy.py \
     --data_split=test \
@@ -75,7 +77,7 @@ CUDA_VISIBLE_DEVICES=$GPU python3 test_explanation_policy.py \
     --output_dir=$EXPL_POLICY \
     --explanation_policy_pretraining \
     --predict_trigger_for_unlabelled \
-    --gpu_batch_size=30
+    --gpu_batch_size=$GPU_BATCH_SIZE
 
 MODEL_PATH=reranking_model
 mkdir $MODEL_PATH
@@ -83,8 +85,8 @@ CUDA_VISIBLE_DEVICES=$GPU python3 train_relation_extraction_model.py \
     --model_class=relation_extraction_roberta \
     --model_name_or_path=roberta-base \
     --base_model=roberta-base \
-    --effective_batch_size=30 \
-    --gpu_batch_size=30 \
+    --effective_batch_size=$EFFECTIVE_BATCH_SIZE \
+    --gpu_batch_size=$GPU_BATCH_SIZE \
     --fp16 \
     --output_dir=$MODEL_PATH \
     --relation_extraction_conditioned_on_explanations \
@@ -102,7 +104,7 @@ CUDA_VISIBLE_DEVICES=$GPU python3 train_drex.py \
     --relation_extraction_ranker_path=$INITIAL_RANKER \
     --explanation_policy_path=$EXPL_POLICY \
     --relation_extraction_reranker_path=$RERANKER \
-    --effective_batch_size=30 \
+    --effective_batch_size=$EFFECTIVE_BATCH_SIZE \
     --gpu_batch_size=1 \
     --fp16 \
     --output_dir=$MODEL_PATH \
