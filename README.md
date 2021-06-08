@@ -1,4 +1,4 @@
-## The repo contains the code to train and evaluate a system when extracts relations and explanations from dialogue.
+## The repo contains the code to train and evaluate a system which extracts relations and explanations from dialogue.
 
 
 ### To train the full system:
