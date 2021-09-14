@@ -1,5 +1,16 @@
 ## The repo contains the code to train and evaluate a system which extracts relations and explanations from dialogue.
 
+#### How do I cite D-REX?
+For now, cite [the Arxiv paper](https://arxiv.org/abs/2109.05126)
+```
+@article{albalak2021drex,
+      title={D-REX: Dialogue Relation Extraction with Explanations}, 
+      author={Alon Albalak and Varun Embar and Yi-Lin Tuan and Lise Getoor and William Yang Wang},
+      journal={arXiv preprint arXiv:2109.05126},
+      year={2021},
+}
+```
+
 
 ### To train the full system:
 ```bash
