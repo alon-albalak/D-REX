@@ -1,4 +1,6 @@
 ## The repo contains the code to train and evaluate a system which extracts relations and explanations from dialogue.
+	
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/d-rex-dialogue-relation-extraction-with/dialog-relation-extraction-on-dialogre)](https://paperswithcode.com/sota/dialog-relation-extraction-on-dialogre?p=d-rex-dialogue-relation-extraction-with)
 
 #### How do I cite D-REX?
 For now, cite [the Arxiv paper](https://arxiv.org/abs/2109.05126)
