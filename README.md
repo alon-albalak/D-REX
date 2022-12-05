@@ -3,13 +3,24 @@
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/d-rex-dialogue-relation-extraction-with/dialog-relation-extraction-on-dialogre)](https://paperswithcode.com/sota/dialog-relation-extraction-on-dialogre?p=d-rex-dialogue-relation-extraction-with)
 
 #### How do I cite D-REX?
-For now, cite [the Arxiv paper](https://arxiv.org/abs/2109.05126)
+Please cite [the ConvAI paper](https://aclanthology.org/2022.nlp4convai-1.4/)
 ```
-@article{albalak2021drex,
-      title={D-REX: Dialogue Relation Extraction with Explanations}, 
-      author={Alon Albalak and Varun Embar and Yi-Lin Tuan and Lise Getoor and William Yang Wang},
-      journal={arXiv preprint arXiv:2109.05126},
-      year={2021},
+@inproceedings{albalak-etal-2022-rex,
+    title = "{D}-{REX}: Dialogue Relation Extraction with Explanations",
+    author = "Albalak, Alon  and
+      Embar, Varun  and
+      Tuan, Yi-Lin  and
+      Getoor, Lise  and
+      Wang, William Yang",
+    booktitle = "Proceedings of the 4th Workshop on NLP for Conversational AI",
+    month = may,
+    year = "2022",
+    address = "Dublin, Ireland",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2022.nlp4convai-1.4",
+    doi = "10.18653/v1/2022.nlp4convai-1.4",
+    pages = "34--46",
+    abstract = "Existing research studies on cross-sentence relation extraction in long-form multi-party conversations aim to improve relation extraction without considering the explainability of such methods. This work addresses that gap by focusing on extracting explanations that indicate that a relation exists while using only partially labeled explanations. We propose our model-agnostic framework, D-REX, a policy-guided semi-supervised algorithm that optimizes for explanation quality and relation extraction simultaneously. We frame relation extraction as a re-ranking task and include relation- and entity-specific explanations as an intermediate step of the inference process. We find that human annotators are 4.2 times more likely to prefer D-REX{'}s explanations over a joint relation extraction and explanation model. Finally, our evaluations show that D-REX is simple yet effective and improves relation extraction performance of strong baseline models by 1.2-4.7{\%}.",
 }
 ```
 
